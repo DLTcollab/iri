@@ -135,6 +135,7 @@ public class API {
         maxGetTrytes = configuration.getMaxGetTrytes();
         maxBodyLength = configuration.getMaxBodyLength();
         testNet = configuration.isTestnet();
+        PearlDiver.init(instance.configuration.getExternalPoWLib());
 
         previousEpochsSpentAddresses = new ConcurrentHashMap<>();
 
