@@ -56,6 +56,11 @@ public interface APIConfig extends Config {
     String getRemoteAuth();
 
     /**
+     * @return {@value Descriptions#EXTERNAL_POW_LIB}
+     */
+    String getExternalPoWLib();
+
+    /**
      * These descriptions are used by JCommander when you enter <code>java iri.jar --help</code> at the command line.
      */
     interface Descriptions {
@@ -69,5 +74,6 @@ public interface APIConfig extends Config {
         String MAX_GET_TRYTES = "The maximal number of trytes that may be returned by the \"getTrytes\" API call. If the number of transactions found exceeds this number an error will be returned.";
         String MAX_BODY_LENGTH = "The maximal number of characters the body of an API call may hold. If a request body length exceeds this number an error will be returned.";
         String REMOTE = "Open the API interface to any host. Equivalent to \"--api-host 0.0.0.0\"";
+        String EXTERNAL_POW_LIB = "Path to the external PearlDiver Library";
     }
 }
