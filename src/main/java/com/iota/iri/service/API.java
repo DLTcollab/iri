@@ -1451,6 +1451,7 @@ public class API {
         tipSelExecService.shutdownNow();
         if (connector != null) {
             connector.stop();
+            PearlDiver.destroy();
         }
     }
 
