@@ -49,6 +49,11 @@ public interface APIConfig extends Config {
      */
     String getRemoteAuth();
 
+    /**
+     * @return {@value Descriptions#EXTERNAL_POW_LIB}
+     */
+    String getExternalPoWLib();
+
     interface Descriptions {
         String PORT = "The port that will be used by the API.";
         String API_HOST = "The host on which the API will listen to. Set to 0.0.0.0 to accept any host.";
@@ -59,5 +64,6 @@ public interface APIConfig extends Config {
         String MAX_GET_TRYTES = "The maximal number of trytes that may be returned by the \"getTrytes\" API call. If the number of transactions found exceeds this number an error will be returned.";
         String MAX_BODY_LENGTH = "The maximal number of characters the body of an API call may hold. If a request body length exceeds this number an error will be returned.";
         String REMOTE = "Open the API interface to any host. Equivalent to \"--api-host 0.0.0.0\"";
+        String EXTERNAL_POW_LIB = "Path to the external PearlDiver Library";
     }
 }
