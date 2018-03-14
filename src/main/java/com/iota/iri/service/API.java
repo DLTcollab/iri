@@ -1723,6 +1723,7 @@ public class API {
     public void shutDown() {
         if (server != null) {
             server.stop();
+            PearlDiver.destroy();
         }
     }
 
