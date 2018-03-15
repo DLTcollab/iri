@@ -1053,9 +1053,11 @@ public class API {
      * @throws ValidationException If the <tt>tag</tt> is a {@link Hash#NULL_HASH}.
      */
     private String padTag(String tag) throws ValidationException {
-        while (tag.length() < HASH_SIZE) {
-            tag += Converter.TRYTE_ALPHABET.charAt(0);
+        StringBuilder tagBuilder = new StringBuilder(tag);
+        while (tagBuilder.length() < HASH_SIZE) {
+            tagBuilder.append(Converter.TRYTE_ALPHABET.charAt(0));
         }
+        tag = tagBuilder.toString();
         if (tag.equals(Hash.NULL_HASH.toString())) {
             throw new ValidationException("Invalid tag input");
         }
