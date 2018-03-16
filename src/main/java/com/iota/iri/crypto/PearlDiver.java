@@ -32,17 +32,18 @@ public class PearlDiver {
     private volatile State state;
     private final Object syncObj = new Object();
 
-    private static boolean isExternal;
+    private static boolean isExternal = false;
 
     public static void init(String exlib_name) {
         try {
             System.loadLibrary(exlib_name);
-            PearlDiver.exlib_init();
-            isExternal = true;
+            if (PearlDiver.exlib_init()) {
+                isExternal = true;
+            }
         } catch (java.lang.UnsatisfiedLinkError e) {
-            isExternal = false;
+            /* Do Nothing */
         } catch (java.lang.NullPointerException e) {
-            isExternal = false;
+            /* Do Nothing */
         }
     }
 
