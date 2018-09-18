@@ -34,10 +34,10 @@ public class PearlDiver {
 
     private static boolean isExternal = false;
 
-    public static void init(String exlib_name) {
+    public static void init(String exlibName) {
         try {
-            System.loadLibrary(exlib_name);
-            if (PearlDiver.exlib_init()) {
+            System.loadLibrary(exlibName);
+            if (PearlDiver.exlibInit()) {
                 isExternal = true;
             }
         } catch (java.lang.UnsatisfiedLinkError e) {
@@ -48,20 +48,20 @@ public class PearlDiver {
     }
 
     /* Initialization function of external pow library */
-    private static native boolean exlib_init();
+    private static native boolean exlibInit();
 
     /* Search function of external pow library */
-    private static native boolean exlib_search(final byte[] transactionTrits, final int minWeigtMagnitude);
+    private static native boolean exlibSearch(final byte[] transactionTrits, final int minWeigtMagnitude);
 
     /* Cancel function of external pow library */
-    private static native void exlib_cancel();
+    private static native void exlibCancel();
 
     /* Destroy function of external pow library */
-    public static native void exlib_destroy();
+    public static native void exlibDestroy();
 
     public static void destroy() {
         if (isExternal) {
-            PearlDiver.exlib_destroy();
+            PearlDiver.exlibDestroy();
         }
     }
 
@@ -81,13 +81,13 @@ public class PearlDiver {
                           int numberOfThreads) {
         validateParameters(transactionTrits, minWeightMagnitude);
         if (isExternal) {
-            return PearlDiver.exlib_search(transactionTrits, minWeightMagnitude);
+            return PearlDiver.exlibSearch(transactionTrits, minWeightMagnitude);
         } else {
-            return _search(transactionTrits, minWeightMagnitude, numberOfThreads);
+            return isearch(transactionTrits, minWeightMagnitude, numberOfThreads);
         }
     }
 
-    public synchronized boolean _search(final byte[] transactionTrits, final int minWeightMagnitude,
+    public synchronized boolean isearch(final byte[] transactionTrits, final int minWeightMagnitude,
                                         int numberOfThreads) {
         synchronized (syncObj) {
             state = State.RUNNING;
@@ -129,7 +129,7 @@ public class PearlDiver {
      */
     public void cancel() {
         if (isExternal) {
-            PearlDiver.exlib_cancel();
+            PearlDiver.exlibCancel();
         } else {
             synchronized (syncObj) {
                 state = State.CANCELLED;
