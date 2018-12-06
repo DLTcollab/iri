@@ -51,7 +51,7 @@ public class PearlDiver {
     private static native boolean exlibInit();
 
     /* Search function of external pow library */
-    private static native boolean exlibSearch(final byte[] transactionTrits, final int minWeigtMagnitude);
+    private static native boolean exlibSearch(final byte[] transactionTrits, final int minWeigtMagnitude, int numberOfThreads);
 
     /* Cancel function of external pow library */
     private static native void exlibCancel();
@@ -81,7 +81,7 @@ public class PearlDiver {
                           int numberOfThreads) {
         validateParameters(transactionTrits, minWeightMagnitude);
         if (isExternal) {
-            return PearlDiver.exlibSearch(transactionTrits, minWeightMagnitude);
+            return PearlDiver.exlibSearch(transactionTrits, minWeightMagnitude, numberOfThreads);
         } else {
             return isearch(transactionTrits, minWeightMagnitude, numberOfThreads);
         }
