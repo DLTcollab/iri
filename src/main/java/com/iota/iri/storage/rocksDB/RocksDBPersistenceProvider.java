@@ -325,10 +325,18 @@ public class RocksDBPersistenceProvider implements PersistenceProvider {
                     Indexable indexable = entry.low;
                     byte[] keyBytes = indexable.bytes();
                     ColumnFamilyHandle handle = classTreeMap.get(entry.hi);
-                    writeBatch.delete(handle, keyBytes);
+                    try {
+                        writeBatch.delete(handle, keyBytes);
+                    } catch (RocksDBException e) {
+                        log.error("Could not delete from the column family: " + handle.getID());
+                    }
                     ColumnFamilyHandle metadataHandle = metadataReference.get(entry.hi);
                     if (metadataHandle != null) {
-                        writeBatch.delete(metadataHandle, keyBytes);
+                        try {
+                            writeBatch.delete(metadataHandle, keyBytes);
+                        } catch (RocksDBException e) {
+                            log.error("Could not delete from the metadata column family: " + metadataHandle.getID());
+                        }
                     }
                 }
 
