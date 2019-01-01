@@ -98,7 +98,7 @@
         <dependency>
             <groupId>org.rocksdb</groupId>
             <artifactId>rocksdbjni</artifactId>
-            <version>5.17.2</version>
+            <version>5.18.1</version>
         </dependency>
 
         <!-- json support -->
