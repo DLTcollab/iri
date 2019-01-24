@@ -1,0 +1,6 @@
+[submodule "dcurl"]
+	path = dcurl
+	url = https://github.com/DLTcollab/dcurl.git
+[submodule "rocksdb"]
+	path = rocksdb
+	url = https://github.com/DLTcollab/rocksdb.git
