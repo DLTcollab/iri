@@ -20,6 +20,9 @@ matrix:
   allow_failures:
     - jdk: oraclejdk9
 
+install:
+ - make rocksdb
+
 script:
   #run tests and integration tests
   # see  https://stackoverflow.com/questions/34405047/how-do-you-merge-into-another-branch-using-travis-with-git-commands?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
@@ -29,7 +32,7 @@ script:
   - git checkout -f $TRAVIS_BRANCH
   - git checkout $build_head
   - git merge $TRAVIS_BRANCH
-  - mvn integration-test -Dlogging-level=INFO
+  - make check
   #run jar sanity tests
   - VERSION=$(mvn help:evaluate -Dexpression=project.version | grep -E '^[0-9.]+')
   - echo $VERSION
