@@ -20,6 +20,9 @@ matrix:
   allow_failures:
     - jdk: oraclejdk9
 
+install:
+ - make rocksdb
+
 script:
   #run tests and integration tests
   # see  https://stackoverflow.com/questions/34405047/how-do-you-merge-into-another-branch-using-travis-with-git-commands?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
@@ -32,7 +35,7 @@ script:
   - VERSION=$(mvn help:evaluate -Dexpression=project.version | grep -E '^[0-9.]+')
   - echo $VERSION
   #run jar sanity tests
-  - mvn integration-test -Dlogging-level=INFO
+  - make check
   #jacoco prep (appends to mvn run)
   - JACOCO_V=$(mvn help:evaluate -Dexpression=jacoco.version | grep -E '^[0-9.]+')
   - export _JAVA_OPTIONS="$_JAVA_OPTIONS -javaagent:$HOME/.m2/repository/org/jacoco/org.jacoco.agent/$JACOCO_V/org.jacoco.agent-$JACOCO_V-runtime.jar=destfile=$PWD/target/jacoco.exec,output=file,append=true,dumponexit=true"
