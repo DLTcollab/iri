@@ -93,6 +93,12 @@
             <version>5.18.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.dltcollab</groupId>
+            <artifactId>dcurljni</artifactId>
+            <version>0.2.0</version>
+        </dependency>
+
         <!-- json support -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
