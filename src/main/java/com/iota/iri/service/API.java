@@ -160,6 +160,8 @@ public class API {
 
     private final String[] features;
     
+    private static Object PoWTimeLock = new Object();
+
     //endregion ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private final Gson gson = new GsonBuilder().create();
@@ -1197,8 +1199,8 @@ public class API {
       * @return The list of transactions in trytes, ready to be broadcast to the network.
       **/
     @Document(name="attachToTangle", returnParam="trytes")
-    public synchronized List<String> attachToTangleStatement(Hash trunkTransaction, Hash branchTransaction,
-                                                             int minWeightMagnitude, List<String> trytes) {
+    public List<String> attachToTangleStatement(Hash trunkTransaction, Hash branchTransaction,
+                                                int minWeightMagnitude, List<String> trytes) {
 
         final List<TransactionViewModel> transactionViewModels = new LinkedList<>();
 
@@ -1253,15 +1255,18 @@ public class API {
                 transactionViewModels.add(transactionViewModel);
                 prevTransaction = transactionViewModel.getHash();
             } finally {
-                API.incEllapsedTimePoW(System.nanoTime() - startTime);
-                API.incCounterPoW();
-                if ((API.getCounterPoW() % 100) == 0) {
-                    String sb = "Last 100 PoW consumed "
-                            + API.getEllapsedTimePoW() / 1000000000L
-                            + " seconds processing time.";
-                    log.info(sb);
-                    counter_PoW = 0;
-                    ellapsedTime_PoW = 0L;
+                long endTime = System.nanoTime();
+                synchronized (PoWTimeLock) {
+                    API.incEllapsedTimePoW(endTime - startTime);
+                    API.incCounterPoW();
+                    if ( ( API.getCounterPoW() % 100) == 0 ) {
+                        String sb = "Last 100 PoW consumed "
+                                    + API.getEllapsedTimePoW() / 1000000000L
+                                    + " seconds processing time.";
+                        log.info(sb);
+                        counter_PoW = 0;
+                        ellapsedTime_PoW = 0L;
+                    }
                 }
             }
         }
