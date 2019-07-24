@@ -590,7 +590,7 @@ public class API {
       * @return {@link com.iota.iri.service.dto.GetTransactionsToApproveResponse}
       **/
     @Document(name="getTransactionsToApprove")
-    private synchronized AbstractResponse getTransactionsToApproveStatement(int depth, Optional<Hash> reference) {
+    private AbstractResponse getTransactionsToApproveStatement(int depth, Optional<Hash> reference) {
         if (depth < 0 || depth > configuration.getMaxDepth()) {
             return ErrorResponse.create("Invalid depth input");
         }
