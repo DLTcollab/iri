@@ -1,5 +1,5 @@
 # Variables
-DCURL_VERSION=0.4.0
+DCURL_VERSION=0.4.1
 
 .PHONY: all dcurl iri check
 
@@ -9,7 +9,7 @@ all: dcurl iri
 dcurl:
 	git submodule update --init $@
 	# FIXME: support other architecture rather than x86_64
-	$(MAKE) -C $@ BUILD_AVX=1 BUILD_JNI=1
+	$(MAKE) -C $@ BUILD_AVX=1 BUILD_REMOTE=1 BUILD_JNI=1
 	# install
 	mvn install:install-file \
 	-DgroupId=org.dltcollab \
