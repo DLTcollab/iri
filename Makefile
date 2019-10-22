@@ -1,5 +1,5 @@
 # Variables
-DCURL_VERSION=0.4.1
+DCURL_VERSION=0.5.0
 
 .PHONY: all dcurl iri check
 
