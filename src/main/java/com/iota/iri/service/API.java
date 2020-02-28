@@ -176,7 +176,7 @@ public class API {
         maxFindTxs = configuration.getMaxFindTransactions();
         maxRequestList = configuration.getMaxRequestsList();
         maxGetTrytes = configuration.getMaxGetTrytes();
-        PearlDiver.init(configuration.getExternalPoWLib());
+        PearlDiver.init(configuration);
 
         features = Feature.calculateFeatureNames(configuration);
         
