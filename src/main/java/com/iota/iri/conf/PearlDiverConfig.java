@@ -13,10 +13,20 @@ public interface PearlDiverConfig extends Config {
     int getPowThreads();
 
     /**
+     * Default Value: {@value BaseIotaConfig.Defaults#BROKER_HOST}
+     *
+     * @return {@value PearlDiverConfig.Descriptions#BROKER_HOST}
+     */
+    String getBrokerHost();
+
+    /**
     * Field descriptions
     */
     interface Descriptions {
         String POW_THREADS = "Number of threads to use for proof-of-work calculation. " +
                 "0 means you default to a number that depends on the number of cores your machine has.";
+        String BROKER_HOST = "The hostname of the broker. " +
+                "The default value is localhost. IP address is acceptable as well. " +
+                "Broker is a service for distributing the proof-of-work calculation.";
     }
 }
