@@ -1,6 +1,6 @@
 # Variables
 ROCKSDB_VERSION=5.18.3
-DCURL_VERSION=0.5.0
+DCURL_VERSION=0.6.0
 
 .PHONY: all dcurl rocksdb iri check
 
