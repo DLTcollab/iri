@@ -2,6 +2,8 @@ package com.iota.iri.crypto;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.iota.iri.conf.IotaConfig;
 import org.dltcollab.Dcurl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +40,9 @@ public class PearlDiver {
 
     private static boolean isExternal = false;
 
-    public static void init(String exlibName) {
+    public static void init(IotaConfig configuration) {
+        String exlibName = configuration.getExternalPoWLib();
+        String brokerHost = configuration.getBrokerHost();
         try {
             try {
                 System.loadLibrary(exlibName);
@@ -48,7 +52,7 @@ public class PearlDiver {
                     dcurl.loadLibraryFromJar();
                 }
             }
-            if (PearlDiver.exlibInit()) {
+            if (PearlDiver.exlibInit(brokerHost.getBytes(), brokerHost.getBytes().length)) {
                 isExternal = true;
             }
         } catch (java.lang.UnsatisfiedLinkError e) {
@@ -59,7 +63,7 @@ public class PearlDiver {
     }
 
     /* Initialization function of external pow library */
-    private static native boolean exlibInit();
+    private static native boolean exlibInit(final byte[] brokerHost, final int brokerHostLen);
 
     /* Search function of external pow library */
     private static native boolean exlibSearch(final byte[] transactionTrits, final int minWeigtMagnitude, int numberOfThreads);

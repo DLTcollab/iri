@@ -95,6 +95,7 @@ public abstract class BaseIotaConfig implements IotaConfig {
 
     //PearlDiver
     protected int powThreads = Defaults.POW_THREADS;
+    protected String brokerHost = Defaults.BROKER_HOST;
 
     //Snapshot
     protected boolean localSnapshotsEnabled = Defaults.LOCAL_SNAPSHOTS_ENABLED;
@@ -844,6 +845,17 @@ public abstract class BaseIotaConfig implements IotaConfig {
     }
 
     @Override
+    public String getBrokerHost() {
+        return brokerHost;
+    }
+
+    @JsonProperty
+    @Parameter(names = "--broker-host", description = PearlDiverConfig.Descriptions.BROKER_HOST)
+    protected void setBrokerHost(String brokerHost) {
+        this.brokerHost = brokerHost;
+    }
+
+    @Override
     public boolean isPrintSyncProgressEnabled() {
         return printSyncProgressEnabled;
     }
@@ -916,6 +928,7 @@ public abstract class BaseIotaConfig implements IotaConfig {
 
         //PearlDiver
         int POW_THREADS = 0;
+        String BROKER_HOST = "localhost";
 
         //Coo
         Hash COORDINATOR = HashFactory.ADDRESS.create(
