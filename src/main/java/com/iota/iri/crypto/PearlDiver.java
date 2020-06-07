@@ -2,6 +2,9 @@ package com.iota.iri.crypto;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.dltcollab.Dcurl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Proof of Work calculator.
@@ -21,6 +24,7 @@ public class PearlDiver {
         COMPLETED
     }
 
+    private static final Logger log = LoggerFactory.getLogger(PearlDiver.class);
     private static final int TRANSACTION_LENGTH = 8019;
 
     private static final int CURL_HASH_LENGTH = 243;
@@ -36,14 +40,21 @@ public class PearlDiver {
 
     public static void init(String exlibName) {
         try {
-            System.loadLibrary(exlibName);
+            try {
+                System.loadLibrary(exlibName);
+            } catch (java.lang.UnsatisfiedLinkError e) {
+                if (exlibName.equals("dcurl")) {
+                    Dcurl dcurl = new Dcurl();
+                    dcurl.loadLibraryFromJar();
+                }
+            }
             if (PearlDiver.exlibInit()) {
                 isExternal = true;
             }
         } catch (java.lang.UnsatisfiedLinkError e) {
-            /* Do Nothing */
+            log.info("No external library for {}", PearlDiver.class.getSimpleName());
         } catch (java.lang.NullPointerException e) {
-            /* Do Nothing */
+            log.info("The external library name is an empty string");
         }
     }
 
